@@ -47,7 +47,7 @@ describe('#productsModel', () => {
     beforeEach(() => {
       sinon.restore();
     });
-    it('Create e retorna produto criado.', async () => {
+    it('Cria e retorna produto criado.', async () => {
       sinon.stub(connection, 'execute').resolves([{ insertId: EXPECTE_ID }]);
       const response = await productsModels.createProduct(NAME);
       expect(response).to.be.deep.equal({ id: EXPECTE_ID, name: NAME });
