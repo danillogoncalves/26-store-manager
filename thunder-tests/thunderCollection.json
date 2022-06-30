@@ -1,0 +1,17 @@
+[
+  {
+    "_id": "2932e9a7-99ed-48c5-849c-740b7eafb777",
+    "colName": "26-store-manager",
+    "created": "2022-06-30T03:06:11.755Z",
+    "sortNum": 10000,
+    "folders": [
+      {
+        "_id": "89671108-a5c7-44a5-bf95-8eee73f0657e",
+        "name": "products",
+        "containerId": "",
+        "created": "2022-06-30T03:06:49.080Z",
+        "sortNum": 10000
+      }
+    ]
+  }
+]
