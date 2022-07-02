@@ -78,5 +78,24 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "5e83e930-4bd2-4b3e-892c-5b098575d82f",
+    "colId": "2932e9a7-99ed-48c5-849c-740b7eafb777",
+    "containerId": "89671108-a5c7-44a5-bf95-8eee73f0657e",
+    "name": "updateProduct",
+    "url": "localhost:3000/products/1",
+    "method": "PUT",
+    "sortNum": 90000,
+    "created": "2022-07-02T04:38:42.574Z",
+    "modified": "2022-07-02T04:40:53.095Z",
+    "headers": [],
+    "params": [],
+    "body": {
+      "type": "json",
+      "raw": "  {\n    \"name\": \"Martelo do Batman\"\n  }",
+      "form": []
+    },
+    "tests": []
   }
 ]

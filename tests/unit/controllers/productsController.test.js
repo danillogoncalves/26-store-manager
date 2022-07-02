@@ -104,4 +104,47 @@ describe('#productsController', () => {
       expect(res.json.calledWith(PRODUCT)).to.be.equal(true);
     });
   });
+  describe('#updateProduct', () => {
+    beforeEach(() => {
+      sinon.restore();
+    });
+    it('Atualiza o nome de um produto.', async () => {
+      const req = {};
+      const res = {};
+
+      const PRODUCT_ID = 1;
+      const NAME = 'Martelo do Batman';
+      const PRODUCT = { id: PRODUCT_ID, name: NAME }
+
+      req.params = { id: PRODUCT_ID };
+      req.body = { name: NAME };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub();
+
+      sinon.stub(productsService, 'updateProduct').resolves(PRODUCT);
+      await productsController.updateProduct(req, res);
+
+      expect(res.status.calledWith(200)).to.be.equal(true);
+      expect(res.json.calledWith(PRODUCT)).to.be.equal(true);
+    });
+    it('Retorno error quando o ID for inválido.', async () => {
+      const req = {};
+      const res = {};
+
+      const PRODUCT_ID = 1001;
+      const NAME = 'Martelo do Batman';
+      const ERROR = { error: { code: 404, message: 'Product not found' } };
+
+      req.params = { id: PRODUCT_ID };
+      req.body = { name: NAME };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub();
+
+      sinon.stub(productsService, 'updateProduct').resolves(ERROR);
+      await productsController.updateProduct(req, res);
+
+      expect(res.status.calledWith(404)).to.be.equal(true);
+      expect(res.json.calledWith({ message: 'Product not found' })).to.be.equal(true);
+    });
+  });
 });

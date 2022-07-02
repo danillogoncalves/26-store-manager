@@ -53,4 +53,17 @@ describe('#productsModel', () => {
       expect(response).to.be.deep.equal({ id: EXPECTE_ID, name: NAME });
     });
   });
+  describe('#updateProduct', () => {
+    beforeEach(() => {
+      sinon.restore();
+    });
+    it('Atualiza o nome de um produto.', async () => {
+      const PRODUCT_INFO = { affectedRows: 1, productInfo: { id: 1, name: 'Martelo do Batman' } };
+      const PRODUCT_ID = 1;
+      const NAME = 'Martelo do Batman'
+      sinon.stub(connection, 'execute').resolves([{ affectedRows: 1 }])
+      const response = await productsModels.updateProduct(PRODUCT_ID, NAME);
+      expect(response).to.be.deep.equal(PRODUCT_INFO);
+    });
+  });
 });
