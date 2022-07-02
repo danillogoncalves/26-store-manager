@@ -147,4 +147,41 @@ describe('#productsController', () => {
       expect(res.json.calledWith({ message: 'Product not found' })).to.be.equal(true);
     });
   });
+  describe('#deleteProduct', () => {
+    beforeEach(() => {
+      sinon.restore();
+    });
+    it('Deleta um produto.', async () => {
+      const req = {};
+      const res = {};
+
+      const PRODUCT_ID = 1;
+
+      req.params = { id: PRODUCT_ID };
+      res.status = sinon.stub().returns(res);
+      res.end = sinon.stub();
+
+      sinon.stub(productsService, 'deleteProduct').resolves(undefined);
+      await productsController.deleteProduct(req, res);
+
+      expect(res.status.calledWith(204)).to.be.equal(true);
+    });
+    it('Retorno error quando o ID for inválido.', async () => {
+      const req = {};
+      const res = {};
+
+      const PRODUCT_ID = 1001;
+      const ERROR = { error: { code: 404, message: 'Product not found' } };
+
+      req.params = { id: PRODUCT_ID };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub();
+
+      sinon.stub(productsService, 'deleteProduct').resolves(ERROR);
+      await productsController.deleteProduct(req, res);
+
+      expect(res.status.calledWith(404)).to.be.equal(true);
+      expect(res.json.calledWith({ message: 'Product not found' })).to.be.equal(true);
+    });
+  });
 });

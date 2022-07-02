@@ -87,6 +87,14 @@ describe('#productsService', () => {
     beforeEach(() => {
       sinon.restore();
     });
+    it('Deleta um produto.', async () => {
+      const DELETE_INFO = 1;
+      const PRODUCT_ID = 1;
+      const DELETE_RETURN = undefined;
+      sinon.stub(productsModel, 'deleteProduct').resolves(DELETE_INFO);
+      const response = await productsService.deleteProduct(PRODUCT_ID);
+      expect(response).to.be.equal(DELETE_RETURN);
+    });
     it('Retorno error quando o ID for inválido.', async () => {
       const ERROR_INFO = 0;
       const PRODUCT_ID = 1001;
