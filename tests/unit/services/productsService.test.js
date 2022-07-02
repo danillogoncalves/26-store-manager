@@ -74,12 +74,26 @@ describe('#productsService', () => {
       expect(response).to.be.deep.equal({ id: 1, name: 'Martelo do Batman' });
     });
     it('Retorno error quando o ID for inválido.', async () => {
+      const PRODUCT_INFO = { affectedRows: 0, productInfo: { id: 1001, name: 'Martelo do Batman' } };
       const ERROR_INFO = { error: { code: 404, message: 'Product not found' } };
       const PRODUCT_ID = 1001;
       const NAME = 'Martelo do Batman';
-      sinon.stub(productsModel, 'updateProduct').resolves(ERROR_INFO);
+      sinon.stub(productsModel, 'updateProduct').resolves(PRODUCT_INFO);
       const response = await productsService.updateProduct(PRODUCT_ID, NAME);
       expect(response).to.be.deep.equal(ERROR_INFO);
+    });
+  });
+  describe('#deleteProduct', () => {
+    beforeEach(() => {
+      sinon.restore();
+    });
+    it('Retorno error quando o ID for inválido.', async () => {
+      const ERROR_INFO = 0;
+      const PRODUCT_ID = 1001;
+      const ERROR_RETURN = { error: { code: 404, message: 'Product not found' } }
+      sinon.stub(productsModel, 'deleteProduct').resolves(ERROR_INFO);
+      const response = await productsService.deleteProduct(PRODUCT_ID);
+      expect(response).to.be.deep.equal(ERROR_RETURN);
     });
   });
 });
