@@ -70,9 +70,20 @@ describe('#salesModel', () => {
       sinon.restore();
     });
     it('Retorna a lista do ID de uma venda.', async () => {
-      const SALE_ID = 1
-      sinon.stub(connection, 'execute').resolves(SALE)
+      const SALE_ID = 1;
+      sinon.stub(connection, 'execute').resolves([SALE])
       const response = await salesModel.findBySaleId(SALE_ID);
+      expect(response).to.be.equal(SALE);
+    });
+  });
+  describe('#deleteSale', () => {
+    beforeEach(() => {
+      sinon.restore();
+    });
+    it('', async () => {
+      const SALE_ID = 1;
+      const response = await salesModel.deleteSale(SALE_ID);
+      console.log(response);
     });
   });
 });

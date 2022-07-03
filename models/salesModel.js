@@ -37,8 +37,29 @@ WHERE S.id = ?;`;
   return result;
 };
 
+const deleteSale = async (id) => {
+  const SEARCH_SALE = `SELECT * FROM StoreManager.sales
+  WHERE id = ?`;
+  const [[resultSearchId]] = await connection.execute(
+    SEARCH_SALE,
+    [id],
+  );
+  if (resultSearchId) {
+    const QUERY_SALES_PRODUCTS = `DELETE
+  FROM StoreManager.sales_products
+  WHERE sale_id = ?`;
+    const QUERY_SALES = `DELETE
+  FROM StoreManager.sales
+  WHERE id = ?`;
+    await connection.execute(QUERY_SALES_PRODUCTS, [id]);
+    await connection.execute(QUERY_SALES, [id]);
+  }
+  return resultSearchId;
+};
+
 module.exports = {
   createSales,
   getAllSales,
   findBySaleId,
+  deleteSale,
 };
