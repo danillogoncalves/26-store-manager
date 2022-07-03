@@ -119,4 +119,27 @@ describe('#salesService', () => {
       expect(response[0]).to.be.equal(undefined);
     });
   });
+  describe('#deleteSale', () => {
+    beforeEach(() => {
+      sinon.restore();
+    });
+    it('Deletando venda usando ID da mesma.', async () => {
+      const SALE_ID = 1;
+      const RETURN_FINDBYSALEID = [
+        { date: '2022-07-03T18:48:23.000Z', productId: 1, quantity: 5 },
+        { date: '2022-07-03T18:48:23.000Z', productId: 2, quantity: 10 }
+      ];
+      sinon.stub(salesModel, 'findBySaleId').resolves(RETURN_FINDBYSALEID);
+      const response = await salesService.deleteSale(SALE_ID);
+      expect(response).to.be.deep.equal(undefined);
+    });
+    it('Quando o ID da venda é inválido.', async () => {
+      const SALE_ID = 1001;
+      const RETURN_FINDBYSALEID = [];
+      const ERROR = { error: { code: 404, message: 'Sale not found' } };
+      sinon.stub(salesModel, 'findBySaleId').resolves(RETURN_FINDBYSALEID);
+      const response = await salesService.deleteSale(SALE_ID);
+      expect(response).to.be.deep.equal(ERROR);
+    });
+  });
 });

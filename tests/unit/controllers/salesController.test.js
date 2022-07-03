@@ -2,6 +2,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const salesService = require('../../../services/salesService');
 const salesController = require('../../../controllers/salesController');
+const { expectationFailed } = require('@hapi/boom');
 
 describe('#salesController', () => {
   describe('#createSales', () => {
@@ -146,6 +147,43 @@ describe('#salesController', () => {
       sinon.stub(salesService, 'findBySaleId').resolves(SALE_ERROR);
 
       await salesController.findBySaleId(req, res);
+
+      expect(res.status.calledWith(404)).to.be.equal(true);
+      expect(res.json.calledWith({ message: 'Sale not found' })).to.be.equal(true);
+    });
+  });
+  describe('#deleteSale', () => {
+    beforeEach(() => {
+      sinon.restore();
+    });
+    it('Deletando venda usando ID da mesma.', async () => {
+      const req = {};
+      const res = {};
+
+      const SALE_ID = 1;
+
+      req.params = { id: SALE_ID };
+      res.status = sinon.stub().returns(res);
+      res.end = sinon.stub();
+
+      sinon.stub(salesService, 'deleteSale').resolves(undefined);
+      await salesController.deleteSale(req, res);
+
+      expect(res.status.calledWith(204)).to.be.equal(true);
+    });
+    it('Quando o ID da venda é inválido.', async () => {
+      const req = {};
+      const res = {};
+
+      const SALE_ID = 1;
+      const RETURN_ERROR = { error: { code: 404, message: 'Sale not found' } };
+
+      req.params = { id: SALE_ID };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub();
+
+      sinon.stub(salesService, 'deleteSale').resolves(RETURN_ERROR);
+      await salesController.deleteSale(req, res);
 
       expect(res.status.calledWith(404)).to.be.equal(true);
       expect(res.json.calledWith({ message: 'Sale not found' })).to.be.equal(true);

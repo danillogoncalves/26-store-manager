@@ -80,10 +80,11 @@ describe('#salesModel', () => {
     beforeEach(() => {
       sinon.restore();
     });
-    it('', async () => {
+    it('Deletando venda usando ID da mesma.', async () => {
       const SALE_ID = 1;
+      sinon.stub(connection, 'execute').resolves([{ affectedRows: 2 }]);
       const response = await salesModel.deleteSale(SALE_ID);
-      console.log(response);
+      expect(response).to.be.equal(undefined);
     });
   });
 });
