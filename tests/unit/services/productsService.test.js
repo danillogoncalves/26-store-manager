@@ -104,4 +104,27 @@ describe('#productsService', () => {
       expect(response).to.be.deep.equal(ERROR_RETURN);
     });
   });
+  describe('#searchProducts', () => {
+    beforeEach(() => {
+      sinon.restore();
+    });
+    it('Retorna uma produto da lista.', async () => {
+      const SEARCH = 'mar';
+      const RETURN_SEARCH = [{ id: 1, name: 'Martelo de Thor' }];
+      sinon.stub(productsModel, 'searchProducts').resolves(RETURN_SEARCH);
+      const response = await productsService.searchProducts(SEARCH);
+      expect(response).to.be.deep.equal(RETURN_SEARCH);
+    });
+    it('Retorna todos os produtos da lista, caso a busca estiver vazia.', async () => {
+      const SEARCH = '';
+      const RETURN_SEARCH = [
+        { id: 1, name: 'Martelo de Thor' },
+        { id: 2, name: 'Traje de encolhimento' },
+        { id: 3, name: 'Escudo do Capitão América' }
+      ];
+      sinon.stub(productsModel, 'searchProducts').resolves(RETURN_SEARCH);
+      const response = await productsService.searchProducts(SEARCH);
+      expect(response).to.be.deep.equal(RETURN_SEARCH);
+    });
+  });
 });

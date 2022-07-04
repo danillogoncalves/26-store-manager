@@ -125,5 +125,25 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "47f93f19-9c95-4958-ba14-f8a5cce671a4",
+    "colId": "2932e9a7-99ed-48c5-849c-740b7eafb777",
+    "containerId": "89671108-a5c7-44a5-bf95-8eee73f0657e",
+    "name": "searchProducts",
+    "url": "localhost:3000/products/search?q=",
+    "method": "GET",
+    "sortNum": 40000,
+    "created": "2022-07-04T14:32:23.234Z",
+    "modified": "2022-07-04T14:34:08.130Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "q",
+        "value": "",
+        "isPath": false
+      }
+    ],
+    "tests": []
   }
 ]

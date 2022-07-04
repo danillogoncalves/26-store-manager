@@ -184,4 +184,47 @@ describe('#productsController', () => {
       expect(res.json.calledWith({ message: 'Product not found' })).to.be.equal(true);
     });
   });
+  describe('#searchProducts', () => {
+    beforeEach(() => {
+      sinon.restore();
+    });
+    it('Retorna uma produto da lista.', async () => {
+      const req = {};
+      const res = {};
+
+      const QUERY = 'mar';
+      const RETURN_SEARCH = [{ id: 1, name: 'Martelo de Thor' }];
+
+      req.query = { q: QUERY };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub();
+
+      sinon.stub(productsService, 'searchProducts').resolves(RETURN_SEARCH);
+      await productsController.searchProducts(req, res);
+
+      expect(res.status.calledWith(200)).to.be.equal(true);
+      expect(res.json.calledWith(RETURN_SEARCH)).to.be.equal(true);
+    });
+    it('Retorna todos os produtos da lista, caso a busca estiver vazia.', async () => {
+      const req = {};
+      const res = {};
+
+      const QUERY = '';
+      const RETURN_SEARCH = [
+        { id: 1, name: 'Martelo de Thor' },
+        { id: 2, name: 'Traje de encolhimento' },
+        { id: 3, name: 'Escudo do Capitão América' }
+      ];
+
+      req.query = { q: QUERY };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub();
+
+      sinon.stub(productsService, 'searchProducts').resolves(RETURN_SEARCH);
+      await productsController.searchProducts(req, res);
+
+      expect(res.status.calledWith(200)).to.be.equal(true);
+      expect(res.json.calledWith(RETURN_SEARCH)).to.be.equal(true);
+    });
+  });
 });

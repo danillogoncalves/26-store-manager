@@ -78,4 +78,27 @@ describe('#productsModel', () => {
       expect(response).to.be.equal(PRODUCT_ID);
     });
   });
+  describe('#searchProducts', () => {
+    beforeEach(() => {
+      sinon.restore();
+    });
+    it('Retorna uma produto da lista.', async () => {
+      const SEARCH = 'mar';
+      const RETURN_SEARCH = [{ id: 1, name: 'Martelo de Thor' }];
+      sinon.stub(connection, 'execute').resolves([RETURN_SEARCH]);
+      const response = await productsModel.searchProducts(SEARCH);
+      expect(response).to.be.deep.equal(RETURN_SEARCH);
+    });
+    it('Retorna todos os produtos da lista, caso a busca estiver vazia.', async () => {
+      const SEARCH = '';
+      const RETURN_SEARCH = [
+        { id: 1, name: 'Martelo de Thor' },
+        { id: 2, name: 'Traje de encolhimento' },
+        { id: 3, name: 'Escudo do Capitão América' }
+      ];
+      sinon.stub(connection, 'execute').resolves([RETURN_SEARCH])
+      const response = await productsModel.searchProducts(SEARCH);
+      expect(response).to.be.deep.equal(RETURN_SEARCH);
+    });
+  });
 });
