@@ -142,4 +142,67 @@ describe('#salesService', () => {
       expect(response).to.be.deep.equal(ERROR);
     });
   });
+  describe('#updateSale', () => {
+    beforeEach(() => {
+      sinon.restore();
+    });
+    it('Atualiza uma venda usando ID da mesma.', async () => {
+      const SALE_ID = 1;
+      const SALE = [
+        { "date": "2021-09-09T04:54:29.000Z", "productId": 1, "quantity": 2 },
+        { "date": "2021-09-09T04:54:54.000Z", "productId": 2, "quantity": 2 },
+      ];
+      const LIST = [
+        { "id": 1, "name": "Martelo de Thor" },
+        { "id": 2, "name": "Traje de encolhimento" },
+      ];
+      const SALE_UPDATE = [
+        { "productId": 1, "quantity": 10 },
+        { "productId": 2, "quantity": 50 }
+      ];
+      const RETURN_SALE_UPDATE = {
+        "saleId": 1, "itemsUpdated":
+          [
+            { "productId": 1, "quantity": 10 },
+            { "productId": 2, "quantity": 50 }
+          ]
+      };
+      sinon.stub(salesModel, 'findBySaleId').resolves(SALE);
+      sinon.stub(productsModel, 'getAllProducts').resolves(LIST);
+      const response = await salesService.updateSale(SALE_ID, SALE_UPDATE);
+      expect(response).to.be.deep.equal(RETURN_SALE_UPDATE);
+    });
+    it('Retorna um erro quando o ID da venda for inválido.', async () => {
+      const SALE_INCORRECT_ID = 1001;
+      const SALE_NOT_FOUND = [];
+      const SALE_UPDATE = [
+        { "productId": 1, "quantity": 10 },
+        { "productId": 2, "quantity": 50 }
+      ];
+      const ERROR = { error: { code: 404, message: 'Sale not found' } };
+      sinon.stub(salesModel, 'findBySaleId').resolves(SALE_NOT_FOUND);
+      const response = await salesService.updateSale(SALE_INCORRECT_ID, SALE_UPDATE);
+      expect(response).to.be.deep.equal(ERROR);
+    });
+    it('Retorna um erro quando o ID do produto for inválido.', async () => {
+      const SALE_ID = 1;
+      const SALE = [
+        { "date": "2021-09-09T04:54:29.000Z", "productId": 1, "quantity": 2 },
+        { "date": "2021-09-09T04:54:54.000Z", "productId": 2, "quantity": 2 },
+      ];
+      const LIST = [
+        { "id": 1, "name": "Martelo de Thor" },
+        { "id": 2, "name": "Traje de encolhimento" },
+      ];
+      const SALE_INCORRECT_IDUPDATE = [
+        { "productId": 8, "quantity": 10 },
+        { "productId": 2, "quantity": 50 }
+      ];
+      const ERROR = { error: { code: 404, message: 'Product not found' } };
+      sinon.stub(salesModel, 'findBySaleId').resolves(SALE);
+      sinon.stub(productsModel, 'getAllProducts').resolves(LIST);
+      const response = await salesService.updateSale(SALE_ID, SALE_INCORRECT_IDUPDATE);
+      expect(response).to.be.deep.equal(ERROR);
+    });
+  });
 });

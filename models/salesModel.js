@@ -49,9 +49,22 @@ WHERE id = ?;`;
   await connection.execute(QUERY_SALES, [id]);
 };
 
+const updateSale = async (id, saleUpdate, saleDatabase) => {
+  await Promise.all(
+    saleUpdate.map(({ productId, quantity }, index) => {
+      const QUERY = `UPDATE StoreManager.sales_products
+      SET product_id = ?, quantity = ?
+      WHERE sale_id = ? AND product_id = ?`;
+      return connection.execute(QUERY, [productId, quantity, id, saleDatabase[index].productId]);
+    }),
+  );
+  return { saleId: id, itemsUpdated: saleUpdate };
+};
+
 module.exports = {
   createSales,
   getAllSales,
   findBySaleId,
   deleteSale,
+  updateSale,
 };

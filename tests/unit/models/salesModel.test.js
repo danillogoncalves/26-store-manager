@@ -87,4 +87,34 @@ describe('#salesModel', () => {
       expect(response).to.be.equal(undefined);
     });
   });
+  describe('#updateSale', () => {
+    beforeEach(() => {
+      sinon.restore();
+    });
+    it('Atualiza uma venda usando ID da mesma.', async () => {
+      const SALE_ID = 1
+      const SALE_UPDATE = [
+        { "productId": 1,
+          "quantity": 10
+        },
+        {
+          "productId": 2,
+          "quantity": 50
+        }
+      ];
+      const SALE_DATABASE = [
+        {
+          "productId": 1,
+          "quantity": 2
+        },
+        {
+          "productId": 2,
+          "quantity": 2
+        }
+      ];
+      sinon.stub(connection, 'execute').resolves();
+      const response = await salesModel.updateSale(SALE_ID, SALE_UPDATE, SALE_DATABASE);
+      expect(response).to.be.deep.equal({ saleId: SALE_ID, itemsUpdated: SALE_UPDATE })
+    });
+  });
 });

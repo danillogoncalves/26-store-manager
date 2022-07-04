@@ -189,4 +189,75 @@ describe('#salesController', () => {
       expect(res.json.calledWith({ message: 'Sale not found' })).to.be.equal(true);
     });
   });
+  describe('#updateSale', () => {
+    beforeEach(() => {
+      sinon.restore();
+    });
+    it('Atualiza uma venda usando ID da mesma.', async () => {
+      const req = {};
+      const res = {};
+
+      const SALE_ID = 1;
+      const SALE_UPDATE = [
+        { "productId": 1, "quantity": 10 },
+        { "productId": 2, "quantity": 50 }
+      ];
+      const RETURN_SALE_UPDATE = {
+        "saleId": 1, "itemsUpdated":
+          [
+            { "productId": 1, "quantity": 10 },
+            { "productId": 2, "quantity": 50 }
+          ]
+      };
+      req.params = { id: SALE_ID };
+      req.body = SALE_UPDATE;
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub();
+
+      sinon.stub(salesService, 'updateSale').resolves(RETURN_SALE_UPDATE);
+      await salesController.updateSale(req, res);
+      expect(res.status.calledWith(200)).to.be.equal(true);
+      expect(res.json.calledWith(RETURN_SALE_UPDATE)).to.be.equal(true);
+    });
+    it('Retorna um erro quando o ID da venda for inválido.', async () => {
+      const req = {};
+      const res = {};
+
+      const SALE_INCORRECT_ID = 1001;
+      const SALE_UPDATE = [
+        { "productId": 1, "quantity": 10 },
+        { "productId": 2, "quantity": 50 }
+      ];
+      const ERROR = { error: { code: 404, message: 'Sale not found' } };
+      req.params = { id: SALE_INCORRECT_ID };
+      req.body = SALE_UPDATE;
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub();
+
+      sinon.stub(salesService, 'updateSale').resolves(ERROR);
+      await salesController.updateSale(req, res);
+      expect(res.status.calledWith(404)).to.be.equal(true);
+      expect(res.json.calledWith({ message: 'Sale not found' })).to.be.equal(true);
+    });
+    it('Retorna um erro quando o ID do produto for inválido.', async () => {
+      const req = {};
+      const res = {};
+
+      const SALE_ID = 1;
+      const SALE_INCORRECT_UPDATE = [
+        { "productId": 8, "quantity": 10 },
+        { "productId": 2, "quantity": 50 }
+      ];
+      const ERROR = { error: { code: 404, message: 'Product not found' } };
+      req.params = { id: SALE_ID };
+      req.body = SALE_INCORRECT_UPDATE;
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub();
+
+      sinon.stub(salesService, 'updateSale').resolves(ERROR);
+      await salesController.updateSale(req, res);
+      expect(res.status.calledWith(404)).to.be.equal(true);
+      expect(res.json.calledWith({ message: 'Product not found' })).to.be.equal(true);
+    });
+  });
 });

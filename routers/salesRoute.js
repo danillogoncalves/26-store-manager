@@ -8,5 +8,6 @@ route.get('/', salesController.getAllSales);
 route.get('/:id', salesController.findBySaleId);
 route.post('/', salesValidad.salesValidad, salesController.createSales);
 route.delete('/:id', salesController.deleteSale);
+route.put('/:id', salesValidad.salesValidad, salesController.updateSale);
 
 module.exports = route;

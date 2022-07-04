@@ -70,11 +70,11 @@
     "colId": "2932e9a7-99ed-48c5-849c-740b7eafb777",
     "containerId": "d5d22b54-c5d1-44fc-ad89-73237e934a3a",
     "name": "getAllSales",
-    "url": "localhost:3000/sales",
+    "url": "localhost:3000/sales/1",
     "method": "GET",
     "sortNum": 70000,
     "created": "2022-07-01T19:19:18.712Z",
-    "modified": "2022-07-01T19:19:31.792Z",
+    "modified": "2022-07-04T03:18:57.768Z",
     "headers": [],
     "params": [],
     "tests": []
