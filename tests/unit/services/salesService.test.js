@@ -130,6 +130,7 @@ describe('#salesService', () => {
         { date: '2022-07-03T18:48:23.000Z', productId: 2, quantity: 10 }
       ];
       sinon.stub(salesModel, 'findBySaleId').resolves(RETURN_FINDBYSALEID);
+      sinon.stub(salesModel, 'deleteSale').resolves(undefined);
       const response = await salesService.deleteSale(SALE_ID);
       expect(response).to.be.deep.equal(undefined);
     });
@@ -169,6 +170,7 @@ describe('#salesService', () => {
       };
       sinon.stub(salesModel, 'findBySaleId').resolves(SALE);
       sinon.stub(productsModel, 'getAllProducts').resolves(LIST);
+      sinon.stub(salesModel, 'updateSale').resolves(RETURN_SALE_UPDATE);
       const response = await salesService.updateSale(SALE_ID, SALE_UPDATE);
       expect(response).to.be.deep.equal(RETURN_SALE_UPDATE);
     });

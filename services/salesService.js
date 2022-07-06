@@ -26,13 +26,14 @@ const findBySaleId = async (id) => {
 
 const deleteSale = async (id) => {
   const [result] = await salesModel.findBySaleId(id);
+  console.log(result, 'delete');
   if (!result) return { error: { code: 404, message: 'Sale not found' } };
   await salesModel.deleteSale(id);
 };
 
 const updateSale = async (id, saleUpdate) => {
   const sale = await salesModel.findBySaleId(id);
-
+  console.log(sale, 'update');
   if (!sale[0]) return { error: { code: 404, message: 'Sale not found' } };
 
   const products = await productsModel.getAllProducts();
