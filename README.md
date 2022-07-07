@@ -103,3 +103,6 @@
   </details>
 </div>
 
+#
+
+Todos os projetos da [Trybe](https://www.betrybe.com/) utilizam `listers`, `Git` e `GitHub`.<br/>
