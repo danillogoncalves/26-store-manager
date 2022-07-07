@@ -65,5 +65,41 @@
   - Caso queria conhecer mais sobre variáveis ambiente, segue link sobre:
     - https://blog.rocketseat.com.br/variaveis-ambiente-nodejs/
   </details>
+  
+  <details>
+  <summary>:running: <strong>Rodando API localmente</strong></summary>
+  
+  - Rode o seguinte comando no terminal estando na raiz do projeto:
+  
+    - `npm start`;
+    
+  - Caso você queira foi configurado no package.json um scripts para rodar a aplicação de formas alternativas;
+  </details>
+  
+  <details>
+  <summary>:whale: <strong>Rodando via Docker</strong></summary>
+  <p>Caso você queria e tenha o conhecimento de como usar, existe um arquivo <em><strong>docker-compose</strong></em> na raiz do projeto, seque os comandos criar e acessar os containers:</p>
+  
+  - Na raiz do projeto rode o seguinte comando:
+  
+    - `docker-compose up -d`;
+    
+  - Para acessar o terminal do container, roda o seguinte comando:
+  
+    - `docker container exec -it store_manager bash`;
+  
+  - Para fechar o terminal do container execute o comando:
+  
+    - `exit`;
+    
+  - Se não for mais usar os containers, rode o seguinte comando:
+  
+    - `docker-compose down`;
+  </details>
+  
+  <details>
+    <summary>:eyes: <strong>Teste a aplicação com API Client</strong></summary>
+    <p>:construction: Em construção :construction:</p>
+  </details>
 </div>
 
