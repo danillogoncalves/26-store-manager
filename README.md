@@ -16,6 +16,9 @@
     <li><a href="https://www.chaijs.com/">Chai<a/></li>
     <li><a href="https://sinonjs.org/">Sinon<a/></li>
     <li><a href="https://joi.dev/">Joi<a/></li>
+    <li><a href="https://developer.mozilla.org/pt-BR/docs/Glossary/CRUD">CRUD</a></li>
+    <li><a href="">MSC</a></li>
+    <li><a href="https://developer.mozilla.org/pt-BR/docs/Glossary/REST">REST</a></li>
   </ul>
 </div>
 
